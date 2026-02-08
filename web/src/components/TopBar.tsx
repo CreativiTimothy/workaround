@@ -1,9 +1,9 @@
 import { AppBar, Box, Toolbar, Typography, Button} from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
-type TopBarProps = { onFilterClick?: () => void; };
+type TopBarProps = { onFilterClick?: () => void; onLogInClick?: () => void};
 
-export default function TopBar({ onFilterClick }: TopBarProps) {
+export default function TopBar({ onFilterClick, onLogInClick }: TopBarProps) {
   return (
     <AppBar position="sticky" sx={{ top: 0, bgcolor: "#d9d9d9", color: "black", }}>
       <Toolbar sx={{ minHeight: 72, gap: 2 }}>
@@ -49,20 +49,21 @@ export default function TopBar({ onFilterClick }: TopBarProps) {
 
         {/* Login button (pill) */}
         <Button
-          variant="contained"
-          disableElevation
-          sx={{
-            bgcolor: "#6f6f6f",
-            color: "white",
-            borderRadius: 999,
-            px: 3,
-            py: 1,
-            fontWeight: 800,
-            textTransform: "uppercase",
-            "&:hover": { bgcolor: "#5f5f5f" },
-          }}
+            onClick={onLogInClick}
+            variant="contained"
+            disableElevation
+            sx={{
+                bgcolor: "#6f6f6f",
+                color: "white",
+                borderRadius: 999,
+                px: 3,
+                py: 1,
+                fontWeight: 800,
+                textTransform: "uppercase",
+                "&:hover": { bgcolor: "#5f5f5f" },
+            }}
         >
-          Log In
+            Log In
         </Button>
       </Toolbar>
     </AppBar>

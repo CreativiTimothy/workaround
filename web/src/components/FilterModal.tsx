@@ -1,19 +1,5 @@
 import * as React from "react";
-import Modal from "@mui/material/Modal";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Slider from "@mui/material/Slider";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Rating from "@mui/material/Rating";
+import { Modal, Paper, Box, Typography, Divider, Button, Stack, TextField, ToggleButton, ToggleButtonGroup, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
 
 type FilterModalProps = {
   open: boolean;
