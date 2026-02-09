@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WorkAround – Study Space Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <button id="btn-open-filters" class="pill-button">FILTER</button>
+    </div>
+
+    <div class="top-bar-center">
+      <span class="brand">WorkAround</span>
+    </div>
+
+    <div class="top-bar-right">
+      <button id="btn-open-bookmarks" class="icon-circle-button" title="Bookmarks">★</button>
+      <button id="btn-open-login" class="pill-button">LOG IN</button>
+      <span id="user-greeting" class="user-greeting hidden"></span>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <h2 class="sidebar-title">Study Spaces</h2>
+      <ul id="space-list"></ul>
+    </aside>
+
+    <!-- Map + Details -->
+    <section class="map-and-details">
+      <div id="map"></div>
+      <div id="space-details" class="space-details hidden"></div>
+    </section>
+  </main>
+
+  <!-- Filters Panel -->
+  <section id="filters-panel" class="filters-panel hidden">
+    <div class="filters-card">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button id="btn-close-filters" class="icon-button">&times;</button>
+      </div>
+
+      <div class="filters-body">
+        <!-- Row 1 -->
+        <div class="filters-row">
+          <label>
+            <span>Minimum rating</span>
+            <select id="filter-min-rating">
+              <option value="0">Any</option>
+              <option value="3">3★+</option>
+              <option value="3.5">3.5★+</option>
+              <option value="4">4★+</option>
+              <option value="4.5">4.5★+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Type</span>
+            <select id="filter-type">
+              <option value="any">Any</option>
+              <option value="cafe">Cafe</option>
+              <option value="library">Library</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="filters-row">
+          <label>
+            <span>Max group size</span>
+            <input id="filter-max-group" type="number" min="1" placeholder="e.g. 4" />
+          </label>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="filters-row">
+          <label>
+            <span>Min parking</span>
+            <select id="filter-min-parking">
+              <option value="">Any</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Min outlets</span>
+            <select id="filter-min-outlets">
+              <option value="">Any</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Min Wi-Fi</span>
+            <select id="filter-min-wifi">
+              <option value="">Any</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="filters-row">
+          <label class="checkbox-label">
+            <input id="filter-require-food" type="checkbox" />
+            <span>Food available</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input id="filter-require-studyrooms" type="checkbox" />
+            <span>Study rooms</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input id="filter-open-now" type="checkbox" checked />
+            <span>Open now</span>
+          </label>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="filters-row">
+          <label class="full-width">
+            <span>Text search (Boolean match)</span>
+            <input id="filter-query" type="text" placeholder="e.g. quiet library near UCI" />
+          </label>
+        </div>
+      </div>
+
+      <div class="filters-footer">
+        <button id="btn-search" class="primary-button">Apply filters</button>
+        <button id="btn-reset" class="secondary-button">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <section id="login-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Welcome Back</h3>
+        <button id="btn-close-login" class="icon-button">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <label>
+          <span>Email Address</span>
+          <input id="login-email" type="email" placeholder="Enter your email address" />
+        </label>
+
+        <label>
+          <span>Password</span>
+          <input id="login-password" type="password" placeholder="Enter your password" />
+        </label>
+
+        <button id="btn-login-submit" class="primary-button full-width">LOG IN</button>
+
+        <p class="modal-switch">
+          Don't have an account?
+          <button id="btn-switch-to-signup" class="link-button">Create an Account</button>
+        </p>
+
+        <p id="login-error" class="error-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signup Modal -->
+  <section id="signup-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create an Account</h3>
+        <button id="btn-close-signup" class="icon-button">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <label>
+          <span>Last Name</span>
+          <input id="signup-lastname" type="text" placeholder="Enter your last name" />
+        </label>
+
+        <label>
+          <span>First Name</span>
+          <input id="signup-firstname" type="text" placeholder="Enter your first name" />
+        </label>
+
+        <label>
+          <span>Email Address</span>
+          <input id="signup-email" type="email" placeholder="Enter your email address" />
+        </label>
+
+        <label>
+          <span>Password</span>
+          <input id="signup-password" type="password" placeholder="Enter your password" />
+        </label>
+
+        <button id="btn-signup-submit" class="primary-button full-width">CREATE ACCOUNT</button>
+
+        <p class="modal-switch">
+          Already have an account?
+          <button id="btn-switch-to-login" class="link-button">Log In</button>
+        </p>
+
+        <p id="signup-error" class="error-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bookmarks Modal -->
+  <section id="bookmarks-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Bookmarked Study Spaces</h3>
+        <button id="btn-close-bookmarks" class="icon-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul id="bookmarks-list" class="bookmarks-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Script -->
+  <script src="/public/app.js"></script>
+
+  <!-- Google Maps -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_MAPS_API_KEY}}&callback=initMap"
+    async
+    defer
+  ></script>
+</body>
+</html>

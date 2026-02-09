@@ -1,0 +1,18 @@
+{
+  "name": "workaround",
+  "version": "1.1.0",
+  "description": "Context-aware productivity space advisor (cafes/libraries) with filters, ranking, and accounts.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "path": "^0.12.7",
+    "sqlite3": "^5.1.7"
+  }
+}
