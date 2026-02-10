@@ -1,0 +1,34 @@
+import type { User } from '../types';
+
+export async function getCurrentUser(): Promise<User | null> {
+  const res = await fetch('/api/auth/me');
+  const data = await res.json();
+  return data.user || null;
+}
+
+export async function login(email: string, password: string) {
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  return res.json();
+}
+
+export async function signup(
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
+) {
+  const res = await fetch('/api/auth/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ firstName, lastName, email, password })
+  });
+  return res.json();
+}
+
+export async function logout() {
+  await fetch('/api/auth/logout', { method: 'POST' });
+}
