@@ -355,6 +355,7 @@ body {
   background-color: #4D7973;
   color: white;
   border-radius: 5px;
+  border: transparent;
 }
 
 #btn-reset:hover {

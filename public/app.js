@@ -135,6 +135,9 @@ const bookmarksListEl = document.getElementById('bookmarks-list');
 function initUI() {
   openFiltersBtn.addEventListener('click', () => {
     filtersPanel.classList.remove('hidden');
+    bookmarksModal.classList.add('hidden');
+    loginModal.classList.add('hidden');
+    signupModalModal.classList.add('hidden');
   });
 
   closeFiltersBtn.addEventListener('click', () => {
@@ -169,11 +172,14 @@ function initUI() {
       logout();
     } else {
       loginModal.classList.remove('hidden');
+      bookmarksModal.classList.add('hidden');
+      filtersPanel.classList.add('hidden');
     }
   });
 
   closeLoginBtn.addEventListener('click', () => {
     loginModal.classList.add('hidden');
+    book
   });
 
   closeSignupBtn.addEventListener('click', () => {
@@ -194,6 +200,7 @@ function initUI() {
   signupSubmitBtn.addEventListener('click', handleSignup);
 
   openBookmarksBtn.addEventListener('click', () => {
+    filtersPanel.classList.add('hidden');
     if (!currentUser) {
       loginModal.classList.remove('hidden');
       return;
@@ -220,11 +227,28 @@ async function loadCurrentUser() {
 
 function updateUserUI() {
   if (currentUser) {
-    openLoginBtn.textContent = 'LOG OUT';
-    userGreetingEl.textContent = `Hi, ${currentUser.firstName || currentUser.email}`;
+    openLoginBtn.innerHTML =
+      `<i class="fa-solid fa-arrow-right-from-bracket"></i>
+      <span class="login-button-text button-text">LOG OUT</span>`;
+    const now = new Date();
+    const currentHour = now.getHours();
+    if (5 <= currentHour && currentHour < 12) {
+      userGreetingEl.textContent = `Good morning, ${currentUser.firstName || currentUser.email}!`;
+    }
+    else if (12 <= currentHour && currentHour < 17) {
+      userGreetingEl.textContent = `Good afternoon, ${currentUser.firstName || currentUser.email}!`;
+    }
+    else if (17 <= currentHour) {
+      userGreetingEl.textContent = `Good evening, ${currentUser.firstName || currentUser.email}!`;
+    }
+    else if (21 <= currentHour || currentHour < 5) {
+      userGreetingEl.textContent = `Good night, ${currentUser.firstName || currentUser.email}!`;
+    }
     userGreetingEl.classList.remove('hidden');
   } else {
-    openLoginBtn.textContent = 'LOG IN';
+    openLoginBtn.innerHTML = 
+      `<i class="fa-solid fa-arrow-right-to-bracket"></i>
+      <span class="login-button-text button-text">LOG IN</span>`;
     userGreetingEl.classList.add('hidden');
   }
 }
@@ -538,9 +562,9 @@ function renderSidebar(spaces) {
     bookmarkBtn.className = 'space-item-bookmark-btn';
     if (isBookmarked(space.placeId)) {
       bookmarkBtn.classList.add('bookmarked');
-      bookmarkBtn.textContent = '★';
+      bookmarkBtn.innerHTML = `<i class="fa-solid fa-bookmark"></i>`;
     } else {
-      bookmarkBtn.textContent = '☆';
+      bookmarkBtn.innerHTML = `<i class="fa-regular fa-bookmark"></i>`;
     }
     bookmarkBtn.addEventListener('click', e => {
       e.stopPropagation();
@@ -613,7 +637,7 @@ function showSpaceDetails(space) {
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'close-btn';
-  closeBtn.innerHTML = '&times;';
+  closeBtn.innerHTML = '<i class="fa-solid fa-xmark" id="close-space"></i>';
   closeBtn.addEventListener('click', hideSpaceDetails);
 
   const title = document.createElement('h3');
