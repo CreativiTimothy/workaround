@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>WorkAround – Study Space Finder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/13f5fa701d.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/public/styles.css" />
 </head>
 
@@ -11,7 +12,14 @@
   <!-- Top Navigation Bar -->
   <header class="top-bar">
     <div class="top-bar-left">
-      <button id="btn-open-filters" class="pill-button">FILTER</button>
+      <button id="btn-open-filters" class="pill-button">
+        <i class="fa-solid fa-sliders"></i>
+        <p class="button-text">FILTER</p>
+      </button>
+      <button id="btn-open-bookmarks" class="pill-button">
+        <i class="fa-solid fa-bookmark"></i>
+        <p class="button-text">BOOKMARKS</p>
+      </button>
     </div>
 
     <div class="top-bar-center">
@@ -19,9 +27,11 @@
     </div>
 
     <div class="top-bar-right">
-      <button id="btn-open-bookmarks" class="icon-circle-button" title="Bookmarks">★</button>
-      <button id="btn-open-login" class="pill-button">LOG IN</button>
       <span id="user-greeting" class="user-greeting hidden"></span>
+      <button id="btn-open-login" class="pill-button">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="login-button-text">LOG IN</span>
+      </button>
     </div>
   </header>
 
@@ -29,7 +39,9 @@
   <main class="layout">
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <h2 class="sidebar-title">Study Spaces</h2>
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">STUDY SPACES</h2>
+      </div>
       <ul id="space-list"></ul>
     </aside>
 
@@ -45,104 +57,106 @@
     <div class="filters-card">
       <div class="filters-header">
         <h3>Filters</h3>
-        <button id="btn-close-filters" class="icon-button">&times;</button>
+        <button id="btn-close-filters" class="icon-button"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div class="filters-body">
-        <!-- Row 1 -->
-        <div class="filters-row">
-          <label>
-            <span>Minimum rating</span>
-            <select id="filter-min-rating">
-              <option value="0">Any</option>
-              <option value="3">3★+</option>
-              <option value="3.5">3.5★+</option>
-              <option value="4">4★+</option>
-              <option value="4.5">4.5★+</option>
-            </select>
-          </label>
+      <div class="filters-body-footer">
+        <div class="filters-body">
+          <!-- Row 1 -->
+          <div class="filters-row">
+            <label>
+              <span>Minimum Rating</span>
+              <select id="filter-min-rating">
+                <option value="0">Any</option>
+                <option value="3">3★+</option>
+                <option value="3.5">3.5★+</option>
+                <option value="4">4★+</option>
+                <option value="4.5">4.5★+</option>
+              </select>
+            </label>
 
-          <label>
-            <span>Type</span>
-            <select id="filter-type">
-              <option value="any">Any</option>
-              <option value="cafe">Cafe</option>
-              <option value="library">Library</option>
-            </select>
-          </label>
+            <label>
+              <span>Type</span>
+              <select id="filter-type">
+                <option value="any">Any</option>
+                <option value="cafe">Cafe</option>
+                <option value="library">Library</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="filters-row">
+            <label>
+              <span>Maximum Group Size</span>
+              <input id="filter-max-group" type="number" min="1" placeholder="e.g. 4" />
+            </label>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="filters-row">
+            <label>
+              <span>Minimum Parking</span>
+              <select id="filter-min-parking">
+                <option value="">Any</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Minimum Outlets</span>
+              <select id="filter-min-outlets">
+                <option value="">Any</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Minimum Wi-Fi</span>
+              <select id="filter-min-wifi">
+                <option value="">Any</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="filters-row">
+            <label class="checkbox-label">
+              <span>Food Available</span>
+              <input id="filter-require-food" type="checkbox" />
+            </label>
+
+            <label class="checkbox-label">
+              <span>Study Rooms</span>
+              <input id="filter-require-studyrooms" type="checkbox" />
+            </label>
+
+            <label class="checkbox-label">
+              <span>Open Now</span>
+              <input id="filter-open-now" type="checkbox" checked />
+            </label>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="filters-row">
+            <label class="full-width">
+              <span>Text Search</span>
+              <input id="filter-query" type="text" placeholder="e.g. quiet library near UCI" />
+            </label>
+          </div>
         </div>
 
-        <!-- Row 2 -->
-        <div class="filters-row">
-          <label>
-            <span>Max group size</span>
-            <input id="filter-max-group" type="number" min="1" placeholder="e.g. 4" />
-          </label>
+        <div class="filters-footer">
+          <button id="btn-search" class="primary-button">Apply Filters</button>
+          <button id="btn-reset" class="secondary-button">Reset</button>
         </div>
-
-        <!-- Row 3 -->
-        <div class="filters-row">
-          <label>
-            <span>Min parking</span>
-            <select id="filter-min-parking">
-              <option value="">Any</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Min outlets</span>
-            <select id="filter-min-outlets">
-              <option value="">Any</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Min Wi-Fi</span>
-            <select id="filter-min-wifi">
-              <option value="">Any</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-            </select>
-          </label>
-        </div>
-
-        <!-- Row 4 -->
-        <div class="filters-row">
-          <label class="checkbox-label">
-            <input id="filter-require-food" type="checkbox" />
-            <span>Food available</span>
-          </label>
-
-          <label class="checkbox-label">
-            <input id="filter-require-studyrooms" type="checkbox" />
-            <span>Study rooms</span>
-          </label>
-
-          <label class="checkbox-label">
-            <input id="filter-open-now" type="checkbox" checked />
-            <span>Open now</span>
-          </label>
-        </div>
-
-        <!-- Row 5 -->
-        <div class="filters-row">
-          <label class="full-width">
-            <span>Text search (Boolean match)</span>
-            <input id="filter-query" type="text" placeholder="e.g. quiet library near UCI" />
-          </label>
-        </div>
-      </div>
-
-      <div class="filters-footer">
-        <button id="btn-search" class="primary-button">Apply filters</button>
-        <button id="btn-reset" class="secondary-button">Reset</button>
       </div>
     </div>
   </section>
@@ -152,7 +166,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <h3>Welcome Back</h3>
-        <button id="btn-close-login" class="icon-button">&times;</button>
+        <button id="btn-close-login" class="icon-button"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="modal-body">
@@ -182,19 +196,19 @@
   <section id="signup-modal" class="modal hidden">
     <div class="modal-card">
       <div class="modal-header">
-        <h3>Create an Account</h3>
-        <button id="btn-close-signup" class="icon-button">&times;</button>
+        <h3>Create Account</h3>
+        <button id="btn-close-signup" class="icon-button"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="modal-body">
         <label>
-          <span>Last Name</span>
-          <input id="signup-lastname" type="text" placeholder="Enter your last name" />
+          <span>First Name</span>
+          <input id="signup-firstname" type="text" placeholder="Enter your first name" />
         </label>
 
         <label>
-          <span>First Name</span>
-          <input id="signup-firstname" type="text" placeholder="Enter your first name" />
+          <span>Last Name</span>
+          <input id="signup-lastname" type="text" placeholder="Enter your last name" />
         </label>
 
         <label>
@@ -224,7 +238,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <h3>Bookmarked Study Spaces</h3>
-        <button id="btn-close-bookmarks" class="icon-button">&times;</button>
+        <button id="btn-close-bookmarks" class="icon-button"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <ul id="bookmarks-list" class="bookmarks-list"></ul>
